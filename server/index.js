@@ -7,7 +7,7 @@ dotenv.config();
 const app = express();
 const server = http.createServer(app);
 
-const io = Server(server);
+const io = new Server(server);
 
 app.get('/', (req, res) => {
     res.send('Server is up');
@@ -15,6 +15,10 @@ app.get('/', (req, res) => {
 
 io.on('connection', (socket) => {
     console.log("a user connected");
+
+    socket.on("flag", () => {
+        console.log("Test");
+    })
 
     socket.on('disconnect', () => {
         console.log('a user disconnected');
