@@ -6,6 +6,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 import { UserProvider } from './context/UserContext';
 import Landing from './components/Landing';
+import Chat from './components/Chat';
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
@@ -13,7 +14,7 @@ createRoot(document.getElementById('root')).render(
       <BrowserRouter>
         <Routes>
           <Route path='/' element={<Landing />} />
-          <Route path='/landing' element={<h1>hello</h1>} />
+          <Route path='/chat' element={<Chat />} />
         </Routes>
       </BrowserRouter>
     </UserProvider>
