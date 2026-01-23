@@ -1,12 +1,14 @@
-import React, { useEffect } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import socket from '../services/socket';
+import { useUser } from '../context/UserContext';
 
 export default function Landing() {
     const navigate = useNavigate();
+    const [name, setName] = useUser();
 
     useEffect(() => {
-        console.log('[Landing] mounted');
+        
     }, []);
 
     return (

@@ -1,18 +1,44 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import socket from '../services/socket';
 import SendMessage from './SendMessage';
+import Message from './Message';
 
 export default function Chat() {
+    const [messages, setMessages] = useState([]);
+
     useEffect(() => {
-        console.log('[Chat] mounted');
-        return () => console.log('[Chat] unmounted');
+
+        socket.on('message', (msg) => {
+            setMessages((prevMessages) => [...prevMessages, msg]);
+        });
+
+        return () => {
+            socket.off('message');
+        };
     }, []);
 
     return (
         <div className='flex h-screen w-screen bg-gray-900 text-white'>
 
             {/* Sidebar */}
-            <div className='w-64 bg-gray-800 p-4'>Placeholder for sidebar</div>
+            <div className="
+                w-64 bg-gray-800 border-r border-gray-700 p-4
+                overflow-y-auto
+                scrollbar-thin
+                scrollbar-thumb-gray-700
+                scrollbar-track-transparent
+            ">
+                <h2 className="text-lg font-semibold mb-4">Channels</h2>
+
+                <div className="space-y-2 text-gray-300">
+                    <div className="hover:bg-gray-700 px-3 py-2 rounded cursor-pointer">
+                        # 
+                    </div>
+                    <div className="hover:bg-gray-700 px-3 py-2 rounded cursor-pointer">
+                        # 
+                    </div>
+                </div>
+            </div>
             
             {/* Main Chat Area */}
             <div className='flex flex-col flex-1 h-full'>
@@ -23,9 +49,20 @@ export default function Chat() {
                 </div>
 
                 {/* Messages Area */}
-                <div className='flex-1 overflow-y-auto bg-gray-900'>
-                    <div className='max-w-4xl mx-auto px-6 py-4'>
+                <div 
+                className="
+                    flex-1 overflow-y-auto
+                    bg-linear-to-b from-gray-900 to-gray-800
+                    scrollbar-thin
+                    scrollbar-thumb-gray-700
+                    scrollbar-thumb-rounded-full
+                    scrollbar-track-transparent
+                ">
+                    <div className='max-w-4xl mx-auto px-6 py-4 space-y-1'>
                         {/* Messages will be displayed here */}
+                        {messages.map((msg) => (
+                            <Message author={"Seth Tanner"} text={msg} self={true} />
+                        ))}
                     </div>
                 </div>
 

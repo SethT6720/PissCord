@@ -13,8 +13,13 @@ export default function SendMessage() {
                 input.value = '';
             }
         }}>
-            <input type="text" placeholder="Type a message..." className="flex-1 bg-gray-800 text-white rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-600" />
-            <button type="submit" className="bg-blue-600 hover:bg-blue-700 text-white rounded px-4 py-2">Send</button>
+            <input type="text" placeholder="Type a message..." 
+            className="flex-1 bg-gray-800 text-white rounded-xl px-4 py-3
+                focus:outline-none focus:ring-2 focus:ring-blue-500 
+                placeholder-gray-400 transition" />
+            <button type="submit" 
+            className="bg-blue-600 hover:bg-blue-700 active:scale-95
+                transition text-white px-5 py-3 rounded-xl">Send</button>
         </form>
     )
 }
