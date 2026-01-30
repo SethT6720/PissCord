@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from 'react';
+import { useUser } from '../context/UserContext';
 import socket from '../services/socket';
 import SendMessage from './SendMessage';
 import Message from './Message';
+import Msg from './msg.js';
 
 export default function Chat() {
     const [messages, setMessages] = useState([]);
+    const { name } = useUser();
 
     useEffect(() => {
 
@@ -61,7 +64,7 @@ export default function Chat() {
                     <div className='max-w-4xl mx-auto px-6 py-4 space-y-1'>
                         {/* Messages will be displayed here */}
                         {messages.map((msg) => (
-                            <Message author={"Seth Tanner"} text={msg} self={true} />
+                            <Message author={msg.author} text={msg.text} self={msg.self} />
                         ))}
                     </div>
                 </div>
@@ -70,7 +73,18 @@ export default function Chat() {
                 {/* Message Input */}
                 <div className='bg-gray-900 border-t border-gray-700'>
                     <div className='max-w-4xl mx-auto'>
-                        <SendMessage />
+                        <SendMessage submit={(e) => {
+                            e.preventDefault();
+                            const input = e.target.elements[0];
+                            const message = input.value;
+                            if (message) {
+                                const msgObj = new Msg(name, message);
+                                socket.emit('message', msgObj);
+                                msgObj.self = true;
+                                setMessages((prevMessages) => [...prevMessages, msgObj]);
+                                input.value = '';
+                            }
+                        }} />
                     </div>
                 </div>
             </div>
