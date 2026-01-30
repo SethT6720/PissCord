@@ -23,9 +23,9 @@ app.get('/', (req, res) => {
 io.on('connection', (socket) => {
     console.log("a user connected");
 
-    socket.on("flag", () => {
-        console.log("Test");
-    })
+    socket.on('set-name', (name) => {
+        console.log(`User ${name} connected`);
+    });
 
     socket.on("message", (msg) => {
         io.emit("message", msg);
